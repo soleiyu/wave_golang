@@ -7,11 +7,11 @@ import (
 func Fw(inp Wav, t float32) Wav {
 	res := inp
 
-	fmt.Println(res._DSize)
+	fmt.Println(res.DSize_)
 	fmt.Println(len(res.DATA))
 
-	fwn := int(float32(res._SRate) * t)
-	cnt := int(res._DSize) / 4
+	fwn := int(float32(res.SRate_) * t)
+	cnt := int(res.DSize_) / 4
 
 	fmt.Printf("%f = %d\n", t, fwn)
 

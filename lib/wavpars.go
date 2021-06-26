@@ -41,8 +41,8 @@ func QBDatadumpFde(inp Wav, fn string, tbeg, tlim float32) {
 		fmt.Println(err)
 	}
 
-	num := int(float32(inp._SRate) * tlim)
-	bof := int(float32(inp._SRate) * tbeg)
+	num := int(float32(inp.SRate_) * tlim)
+	bof := int(float32(inp.SRate_) * tbeg)
 	rd, ld := Datapars16(inp.DATA)
 
 	if len(rd) < bof + 2 * num {
@@ -70,8 +70,8 @@ func QDatadumpFde(inp Wav, fn string, tbeg, tlim float32) {
 		fmt.Println(err)
 	}
 
-	num := int(float32(inp._SRate) * tlim)
-	bof := int(float32(inp._SRate) * tbeg)
+	num := int(float32(inp.SRate_) * tlim)
+	bof := int(float32(inp.SRate_) * tbeg)
 	rd, ld := Datapars16(inp.DATA)
 
 	if len(rd) < bof + num {
@@ -98,8 +98,8 @@ func DatadumpFde(inp Wav, fn string, tbeg, tlim float32) {
 		fmt.Println(err)
 	}
 
-	num := int(float32(inp._SRate) * tlim)
-	bof := int(float32(inp._SRate) * tbeg)
+	num := int(float32(inp.SRate_) * tlim)
+	bof := int(float32(inp.SRate_) * tbeg)
 	rd, ld := Datapars16(inp.DATA)
 
 	if len(rd) < bof + num {
@@ -126,8 +126,8 @@ func Datadump16de(inp Wav, fn string, tbeg, tlim float32) {
 		fmt.Println(err)
 	}
 
-	num := int(float32(inp._SRate) * tlim)
-	bof := int(float32(inp._SRate) * tbeg)
+	num := int(float32(inp.SRate_) * tlim)
+	bof := int(float32(inp.SRate_) * tbeg)
 	rd, ld := Datapars16(inp.DATA)
 
 	if len(rd) < bof + num {
@@ -152,7 +152,7 @@ func Datadump16(inp Wav, fn string, tlim float32) {
 		fmt.Println(err)
 	}
 
-	num := int(float32(inp._SRate) * tlim)
+	num := int(float32(inp.SRate_) * tlim)
 	rd, ld := Datapars16(inp.DATA)
 
 	for i := 0; i < num; i++ {
@@ -216,7 +216,7 @@ func Wavpars(fn string) Wav {
 	file.Read(res.FmtId)
 	file.Read(res.Chnum)
 	file.Read(res.SRate)
-	res._SRate = binary.LittleEndian.Uint32(res.SRate)
+	res.SRate_ = binary.LittleEndian.Uint32(res.SRate)
 	file.Read(res.Speed)
 	file.Read(res.BSize)
 	file.Read(res.BRate)
@@ -240,9 +240,9 @@ func Wavpars(fn string) Wav {
 	}
 
 	file.Read(res.DSize)
-	res._DSize = binary.LittleEndian.Uint32(res.DSize)
+	res.DSize_ = binary.LittleEndian.Uint32(res.DSize)
 
-	res.DATA = make([]byte, res._DSize)
+	res.DATA = make([]byte, res.DSize_)
 	file.Read(res.DATA)
 
 	fmt.Printf("%s\n", res.RHead)
@@ -250,10 +250,10 @@ func Wavpars(fn string) Wav {
 	fmt.Printf("%s\n", res.WHead)
 	fmt.Printf("%s\n", res.FHead)
 	fmt.Println(res.Bytes)
-	fmt.Println(res._SRate)
+	fmt.Println(res.SRate)
 	fmt.Println(res.BRate)
 	fmt.Printf("%s\n", res.DHead)
-	fmt.Println(res._DSize)
+	fmt.Println(res.DSize_)
 
 	return res
 }

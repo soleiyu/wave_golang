@@ -2,6 +2,8 @@ package main
 
 import (
 	"./lib"
+	"os"
+	"fmt"
 )
 
 func main() {
@@ -9,18 +11,25 @@ func main() {
 
 	wav := lib.Wavpars("ss.wav")
 
-	lib.Fw(wav, 0.3)
+	rd, _ := lib.Datapars16(wav.DATA)
+	mid := wav.SRate_
+	dump(rd[mid - mid / 5: mid + mid / 5])
 
-//	rd, ld := lib.Datapars16(wav.DATA)
+	an, bn := lib.WindowDft(rd[mid - mid / 5: mid + mid / 5])
+	lib.ABndump(an, bn)
+//	lib.Andump(an)
+//	lib.Bndump(bn)
 
-//	r11, l11 := lib.BRChange(ld, rd, 44100, 11520)
-//	r44, l44 := lib.BRChange(l11, r11, 11520, 44100)
+//	lib.Wavout("res.wav", wav)
+}
 
-//	rd8l, ld8l := lib.Datapars8l(wav.DATA)
+func dump(inp []int16) {
 
-//	wav.DATA = lib.Datamarg16(rd8l, ld8l)
-//	wav.DATA = lib.Datamarg16(r11, l11)
-//	rd8r, _:= lib.Datapars8r(wav.DATA)
+	file, _ := os.Create("dump")
+	defer file.Close()
 
-	lib.Wavout("res.wav", wav)
+	for i := 0; i < len(inp); i++ {
+		sfv := fmt.Sprintf("%d, %d \n", i, inp[i])
+		file.WriteString(sfv)
+	}
 }

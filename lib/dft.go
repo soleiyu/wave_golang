@@ -15,8 +15,8 @@ func DumpDftmde(inp Wav, fn string, tbeg, tlim float32) {
 		fmt.Println(err)
 	}
 
-	bof := int(float32(inp._SRate) * tbeg)
-	num := int(float32(inp._SRate) * tlim)
+	bof := int(float32(inp.SRate_) * tbeg)
+	num := int(float32(inp.SRate_) * tlim)
 	rd, _ := Dataparsf64(inp.DATA)
 
 	if len(rd) < bof + 2205 {
@@ -45,7 +45,7 @@ func DumpDftm(inp Wav, fn string, tbeg float32) {
 		fmt.Println(err)
 	}
 
-	bof := int(float32(inp._SRate) * tbeg)
+	bof := int(float32(inp.SRate_) * tbeg)
 	rd, _ := Dataparsf64(inp.DATA)
 
 	if len(rd) < bof + 2205 {

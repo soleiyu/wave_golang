@@ -20,8 +20,8 @@ type Wav struct{
 	DSize []byte //4
 	DATA []byte
 
-	_SRate uint32
-	_DSize uint32
+	SRate_ uint32
+	DSize_ uint32
 }
 
 //func MkWav() Wav
